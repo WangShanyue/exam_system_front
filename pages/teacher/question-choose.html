@@ -22,35 +22,155 @@
 </div>
 
 <div id="app">
+      <!-- 添加学生弹窗 -->
+
+
+    <div id="modify" class="card">
+    <div class="card-body">
+      <h1 class="card-title">修改问题</h1>
+        <div></div>
+      <form>
+          <thead>
+          <tr>
+                <th width="10%">题型</th>
+                <th  width="30%">
+                    <input type="text" list="typelist" name="" v-model="modify_param.modify_type">
+                    <datalist id="typelist">
+                    <option>主观题</option>
+                    <option>客观题</option>
+                    </datalist>
+                </th>
+                <th></th>
+                <th width="10%">难度</th>
+                <th  width="30%" >
+                    <input type="text" list="degreelist" name="" v-model="modify_param.modify_degree">
+                    <datalist id="degreelist" >
+                    <option>简单</option>
+                    <option>中等</option>
+                    <option>困难</option>
+                    </datalist>
+                </th>
+                 <th ></th>
+                <th width="20%">
+                <button type="button" class="btn btn-google btn-fw" @click="query" /><i class="mdi mdi-account-search"></i> 查询</button>
+                </th>
+          </tr>
+
+
+          </thead>
+
+
+
+          <table id= "mod_pro" class="table">
+          </table>
+        <button type="button" class="btn btn-google btn-fw" @click="modify" /><i class="mdi mdi-reply"></i> 替换</button>
+<!--        <button type="reset" class="btn btn-warning btn-fw" /><i class="mdi mdi-delete-variant"></i> 清空输入框</button>-->
+        <button type="button" class="btn btn-light btn-fw" onclick="javascript:hide_div('modify','end_modify')" /><i class="mdi mdi-window-close"></i> 取消</button>
+      </form>
+      <div></div>
+    </div>
+  </div>
+  <div id="end_modify"></div>
+
+
+  <div id="load" class="card">
+    <div class="card-body">
+      <h2 class="card-title">生成题库</h2>
+      <form>
+           <table class="table">
+          <thead>
+                <tr>
+                    <th>题目类型</th>
+                    <th width="20%">简单题个数</th>
+                    <th width="20%">中等题个数</th>
+                    <th width="20%">困难题个数</th>
+                    <th width="20%">每题分值</th>
+                </tr>
+          </thead>
+
+        <tbody>
+        <tr>
+            <td>客观题</td>
+            <td>
+                <input class="form-control" type="text" id="ks" v-model="auto.ks">
+            </td>
+            <td>
+               <input class="form-control" type="text" id="km" v-model="auto.km" >
+            </td>
+            <td>
+             <input class="form-control" type="text" id="kh"  v-model="auto.kh">
+            </td>
+            <td>
+             <input class="form-control" type="text" id="kp"  v-model="auto.kp">
+            </td>
+        </tr>
+        <tr>
+            <td>主观题</td>
+            <td>
+               <input class="form-control" type="text" id="zs" v-model="auto.zs">
+            </td>
+            <td>
+                <input class="form-control" type="text" id="zm" v-model="auto.zm">
+            </td>
+            <td>
+                <input class="form-control" type="text" id="zh" v-model="auto.zh">
+            </td>
+            <td>
+             <input class="form-control" type="text" id="zp"  v-model="auto.zp">
+            </td>
+        </tr>
+
+        </tbody>
+           </table>
+        <button type="button" class="btn btn-google btn-fw" @click="auto_paper" /><i class="mdi mdi-account-multiple-plus"></i> 自动生成</button>
+<!--        <button type="reset" class="btn btn-warning btn-fw" /><i class="mdi mdi-delete-variant"></i> 清空输入框</button>-->
+        <button type="button" class="btn btn-light btn-fw" onclick="javascript:hide_div('load','over_load')" /><i class="mdi mdi-window-close"></i> 取消</button>
+      </form>
+      <div></div>
+    </div>
+  </div>
+  <div id="over_load"></div>
+
+
     <div class="page-header">
-        <h1>试卷 {{paper.pname}}</h1>
+        <h1>获取试卷</h1>
     </div>
 
     <div class="card">
         <div class="card-body">
-            <h2 class="card-title">已有题目列表</h2>
+            <h2 class="card-title">操作</h2>
+                <button type="button" class="btn btn-gradient-info btn-google" onclick="show_div('load','over_load')" /><i class="mdi mdi-account-multiple-plus"></i> 自动生成试卷</button>
+                <button type="button" class="btn btn-gradient-success btn-google"  @click="save" /><i class="mdi mdi-content-save"></i> 保存</button>
+            <h2 class="card-title">样卷</h2>
             <table class="table">
                 <thead>
                 <tr>
                     <th>编号</th>
                     <th width="30%">题干</th>
                     <th width="10%">类型</th>
-                    <th width="30%">参考答案</th>
-                    <th width="9%">分值</th>
+                    <th width="20%">参考答案</th>
+                    <th width="10%">难度</th>
+                    <th width="10%">分值</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(pro, index) in prolist.question_list">
-                    <td>{{ pro.id }}</td>
+                <tr v-for="(pro, index) in prolist" v-if="pro.valid == 'true'">
+                    <td>{{ index+1 }}</td>
                     <td>{{ pro.problem }}</td>
                     <td v-if="pro.type == 'keguan'">客观题</td>
                     <td v-if="pro.type == 'zhuguan'">主观题</td>
                     <td>{{pro.right}}</td>
-
-                    <td>{{pro.point}}</td>
-                    <td><input type="button" class="btn-gradient-info"
-                                                            v-on:click="remove(pro.id)" value="删除"/></td>
+                    <td>{{pro.degree}}</td>
+                    <td>
+                    <input class="form-control" type="text" id="problem" v-model="pro.point">
+                    </td>
+                    <td>
+                        <input type="button" class="btn-gradient-warning"
+                                                            v-on:click="remove(index)" value="删除"/>
+                        <input type="button" class="btn-gradient-info"
+                                                            v-on:click="show_modify(index)" value="修改"/>
+                    </td>
 
                 </tr>
                 </tbody>
@@ -71,8 +191,9 @@
                     <th>编号</th>
                     <th width="30%">题干</th>
                     <th width="10%">类型</th>
-                    <th width="30%">参考答案</th>
-                    <th width="9%">分值</th>
+                    <th width="20%">参考答案</th>
+                    <th width="10%">难度</th>
+                    <th width="15%">上次使用日期</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -83,10 +204,8 @@
                     <td v-if="pro.type == 'keguan'">客观题</td>
                     <td v-if="pro.type == 'zhuguan'">主观题</td>
                     <td>{{pro.right}}</td>
-
-                    <td>
-                    <input class="form-control" type="text" id="problem" v-model="pro.point">
-                    </td>
+                    <td>{{pro.degree}}</td>
+                    <td>{{pro.lastTime}}</td>
                     <td v-if="pro.inpaper == 'false'"><input type="button" class="btn-gradient-success "
                                                              v-on:click="insert(pro.id,pro.point)" value="添加"/></td>
                     <td v-if="pro.inpaper == 'true'"><input type="button" class="btn-gradient-info"

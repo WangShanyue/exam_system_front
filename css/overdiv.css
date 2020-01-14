@@ -24,6 +24,22 @@
 	background: #cef5f57c;
 }
 
+  #modify
+ {
+	display:none;
+	border:1em;
+	height:60%;
+	width:60%;
+	position:fixed;
+	top:20%;
+	left:20%;
+	z-index:2;
+	background: rgba(43, 255, 223, 0.5);
+}
+
+
+
+
 #over
 {
 	width: 100%;
@@ -50,6 +66,20 @@
 	z-index:1;
 	background: silver;
 }
+ #end_modify
+ {
+	width: 100%;
+	height: 100%;
+	opacity:0.8;
+	filter:alpha(opacity=80);
+	display: none;
+	position:fixed;
+	top:0;
+	left:0;
+	z-index:1;
+	background: silver;
+}
+
 
 .float_top
 {
