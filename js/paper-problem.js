@@ -62,6 +62,33 @@ var vm = new Vue({
     modify:function(){
       // NOT confirmed to implement this one
     },
+    get_docx:function () {
+      postdata = {
+          action: 'get_docx',
+          paperid: this.paper.pid,
+        };
+      this.$http.post(backend_server + 'get-docx/', postdata, {credentials: true})
+      .then(function(res){
+        //console.log(res.bodyText);
+        var dataret = JSON.parse(res.bodyText);
+        if (dataret.code == 200)
+        {
+          //console.log(this.prolist);
+          alert('生成完毕');
+          document.getElementById("demo").click();
+        }
+        else
+        {
+          alert('生成失败（1）');
+          //location.reload();
+        }
+      },function(res){
+        console.log(res.status);
+        alert('生成失败（2）');
+        //location.reload();
+      });
+    }
+    ,
     insert:function(){
       // Bug fix: Reload point field to integer
       this.newpro.point = parseInt(this.newpro.point);

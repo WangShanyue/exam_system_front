@@ -167,6 +167,11 @@
 
                     <button type="button" v-on:click="store()" class="btn btn-rounded btn-inverse-success btn-md">
                         <i class="mdi mdi-comment-text-outline"></i> 题库选择</button>
+
+                    <button type="button" class="btn btn-rounded btn-inverse-primary btn-md" @click="get_docx"/>
+                    <i class="mdi mdi-arrow-down-bold-circle-outline"></i> 生成文档</button>
+                    <a href="../../files/demo.zip"><span id="demo"></span></a>
+
                 </form>
             </div>
         </div>
@@ -176,6 +181,7 @@
     <!-- 题目列表卡片 -->
     <div class="card">
         <div class="card-body">
+
             <h2 class="card-title">题目列表</h2>
             <!-- <p class="card-description">如需增加/删除试题，请使用试题管理</p> -->
             <table class="table">
@@ -212,6 +218,7 @@
                 <button type="button" class="btn btn-gradient-danger btn-block" @click="remove('all')"><i
                         class="mdi mdi-delete-forever"></i> 清空所有题目
                 </button>
+
             </p>
         </div>
     </div>

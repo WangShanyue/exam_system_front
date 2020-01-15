@@ -112,7 +112,7 @@ var vm = new Vue({
                           for (var i=0; i<3; i++)
                           {
                             tabledata += "<td>";
-                            tabledata += "<label><input type=\"radio\" name=\"choice\" value=\""+i+"\" v-model='modify_param.modify_no'>"+i+"</label>";
+                            tabledata += "<label><input type=\"radio\" name=\"choice\" value=\""+i+"\" v-model='modify_param.modify_no'></label>";
                             tabledata += "</td>";
 
                             tabledata += "<td>";
